@@ -83,7 +83,7 @@ So kann man das Ergebnis auch direkt in evcc als Einspeisevergütung abrufen:
 ```yaml
 price: # current price
 source: http
-uri: chrsbrmr/oemag-marktpreis@refs/heads/main/preis.json (raw)
+uri: https://raw.githubusercontent.com/chrsbrmr/oemag-marktpreis/refs/heads/main/preis.json
 jq: .oemag_marktpreis
 ```
 
