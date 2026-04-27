@@ -76,6 +76,17 @@ sensor:
     scan_interval: 86400
 ```
 
+### evcc Integration
+So kann man das Ergebnis auch direkt in evcc als Einspeisevergütung abrufen:
+**neue Einspeisevergütung -> benutzerdefiniertes Gerät**
+
+```yaml
+price: # current price
+source: http
+uri: chrsbrmr/oemag-marktpreis@refs/heads/main/preis.json (raw)
+jq: .oemag_marktpreis
+```
+
 ## 📦 Abhängigkeiten
 
 - `requests` - HTTP-Requests
