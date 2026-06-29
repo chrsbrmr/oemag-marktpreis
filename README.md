@@ -1,44 +1,48 @@
 # ⚡ ÖMAG Marktpreis Scraper
 
-> Tägliche Aktualisierung des Strommarktpreises von der ÖMAG
+Tägliche Aktualisierung des Strommarktpreises der ÖMAG.
 
 ## 📋 Überblick
 
-Dieses Repository aktualisiert die Datei **`preis.json`** täglich mit dem aktuellsten bekannten Marktpreis für Strom von der [ÖMAG (Österreichische Energiebörse)](https://www.oem-ag.at/).
+Dieses Repository aktualisiert die Datei `preis.json` täglich mit dem aktuellen Marktpreis für Strom von der [ÖMAG (Abwicklungsstelle für Ökostrom AG)](https://www.oem-ag.at/).
 
-Der Scraper ruft automatisch die Marktpreisdaten ab und speichert diese in einem strukturierten JSON-Format für einfache Verarbeitung und Integration.
+Der Scraper ruft die Marktpreisdaten automatisch ab und speichert sie in einem strukturierten JSON-Format für die einfache Integration.
 
-## 🎯 Funktionalität
+## 🎯 Funktionen
 
-- ✅ Automatisches Scraping der ÖMAG-Website
-- ✅ Tägliche Aktualisierung des Marktpreises
-- ✅ Strukturierte JSON-Speicherung mit Metadaten
-- ✅ Zeitstempe für Nachverfolgung
-- ✅ Preisangaben in EUR/kWh
+* Automatisches Scraping der ÖMAG-Website
+* Tägliche Aktualisierung des Marktpreises
+* Strukturierte JSON-Ausgabe mit Metadaten
+* Zeitstempel zur Nachverfolgung
+* Preisangaben in EUR/kWh
 
 ## 📦 Struktur
 
-### Input
+### Quelle
 
-- 🌐 **Quelle**: https://www.oem-ag.at/marktpreis/
+* 🌐 [https://www.oem-ag.at/marktpreis/](https://www.oem-ag.at/marktpreis/)
 
-### Output
+### Ausgabe
 
-- 💾 **Datei**: `preis.json`
-- 📊 **Format**: JSON mit folgendem Inhalt:
-  ```json
-  {
-    "timestamp": "2026-03-29T14:13:47.041157",
-    "oemag_marktpreis": 0.08457,
-    "unit": "EUR/kWh",
-    "raw_scraped_value": "8,457 ct/kWh"
-  }
-  ```
+* 💾 **Datei**: `preis.json`
+* 📊 **Format**: JSON mit folgendem Inhalt:
+```json
+{
+  "timestamp": "2026-03-29T14:13:47.041157",
+  "oemag_marktpreis": 0.08457,
+  "unit": "EUR/kWh",
+  "raw_scraped_value": "8,457 ct/kWh"
+}
+
+```
+
+
 
 Abrufbar unter:
 
 ```
 https://raw.githubusercontent.com/chrsbrmr/oemag-marktpreis/refs/heads/main/preis.json
+
 ```
 
 ## 🚀 Verwendung
@@ -47,23 +51,25 @@ https://raw.githubusercontent.com/chrsbrmr/oemag-marktpreis/refs/heads/main/prei
 
 ```bash
 pip install -r requirements.txt
+
 ```
 
-### Manuelles Ausführen
+### Manuelle Ausführung
 
 ```bash
 python scrape.py
+
 ```
 
 ### Automatisierung
 
-Die tägliche Ausführung erfolgt über **GitHub Actions** (`.github/workflows/scrape.yml`). Der Scraper läuft automatisch jeden Tag zur konfigurierten Zeit.
+Die tägliche Ausführung erfolgt über **GitHub Actions** (`.github/workflows/scrape.yml`) automatisch nach Zeitplan.
 
 ### Home Assistant Integration
 
-Den folgenden Eintrag in configuration.yaml hinzufügen:
+Den folgenden Eintrag in die `configuration.yaml` einfügen:
 
-```json
+```yaml
 sensor:
   - platform: rest
     name: "OeMAG Marktpreis"
@@ -74,25 +80,27 @@ sensor:
     device_class: monetary
     state_class: measurement
     scan_interval: 86400
+
 ```
 
 ### evcc Integration
-So kann man das Ergebnis auch direkt in evcc als Einspeisevergütung abrufen:
-**neue Einspeisevergütung -> benutzerdefiniertes Gerät**
+
+Einbindung in evcc als Einspeisevergütung (**neue Einspeisevergütung -> benutzerdefiniertes Gerät**):
 
 ```yaml
-price: # current price
-source: http
-uri: https://raw.githubusercontent.com/chrsbrmr/oemag-marktpreis/refs/heads/main/preis.json
-jq: .oemag_marktpreis
+price:
+  source: http
+  uri: https://raw.githubusercontent.com/chrsbrmr/oemag-marktpreis/refs/heads/main/preis.json
+  jq: .oemag_marktpreis
+
 ```
 
 ## 📦 Abhängigkeiten
 
-- `requests` - HTTP-Requests
-- `beautifulsoup4` - HTML-Parsing
+* `requests`
+* `beautifulsoup4`
 
-## 🔄 Workflow
+## 🔄 Ablauf
 
 ```
 1. 🌐 Website abrufen
@@ -103,13 +111,11 @@ jq: .oemag_marktpreis
    ↓
 4. 💾 In preis.json speichern
    ↓
-5. ⏰ Mit Zeitstempel dokumentieren
+5. ⏰ Zeitstempel setzen
+
 ```
-
-## 📝 Lizenz
-
-Dieses Projekt wird bereitgestellt "wie es ist" für persönliche und kommerzielle Nutzung.
 
 ---
 
-**Zuletzt aktualisiert**: 29. März 2026 ✨
+**Haftungsausschluss (Disclaimer):**
+Dieses Open-Source-Projekt wird kostenlos und „wie besehen“ (as is) ohne jegliche Gewährleistung, Garantie oder Zusage der Betriebsbereitschaft zur Verfügung gestellt. Jegliche Haftung für Schäden, die direkt oder indirekt aus der Nutzung der Daten oder des Scrapers entstehen (insbesondere durch fehlerhafte Preisauslesung oder Ausfälle), ist ausgeschlossen. Die Bereitstellung erfolgt freibleibend und nur bis auf Widerruf. Bei Beschwerden oder Einwänden wenden Sie sich bitte an: chrsbrmr@duck.com.
